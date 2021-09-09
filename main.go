@@ -2,6 +2,8 @@ package main
 
 import (
 	"log"
+	"net"
+	"net/http"
 	"time"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
@@ -14,6 +16,15 @@ func main() {
 	}
 
 	log.Println("Starting bot...")
+
+	// heroku hack
+	go func() {
+		err = http.ListenAndServe(net.JoinHostPort("", port), nil)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
+
 	bot, err := tgbotapi.NewBotAPI(botToken)
 	if err != nil {
 		log.Println(botToken)
@@ -32,6 +43,7 @@ func main() {
 	}
 
 	for range time.Tick(time.Minute) {
+
 		if time.Now().UTC().Hour() == startTime-timezone && !startedWork {
 			startedWork = true
 			msg := tgbotapi.NewMessage(userID, "Start workday")
@@ -47,5 +59,12 @@ func main() {
 			}
 
 		}
+
+		// heroku hack
+		_, err = http.Get(url)
+		if err != nil {
+			log.Fatal(err)
+		}
+
 	}
 }

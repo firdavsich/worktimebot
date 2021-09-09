@@ -13,9 +13,23 @@ var (
 	startTime   int
 	endTime     int
 	timezone    int
+	port        string
+	url         string
+	appName     string
 )
 
 func getvars() error {
+	port = os.Getenv("PORT")
+	if len(port) == 0 {
+		return fmt.Errorf("PORT is not set")
+	}
+
+	appName = os.Getenv("HEROKU_APP_NAME")
+	if len(appName) == 0 {
+		return fmt.Errorf("HEROKU_APP_NAME is not set")
+	}
+	url = fmt.Sprintf("https://" + appName + ".herokuapp.com")
+
 	botToken = os.Getenv("BOT_TOKEN")
 	timezone = 3
 
