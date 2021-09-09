@@ -16,7 +16,7 @@ var (
 )
 
 func getvars() error {
-	botToken := os.Getenv("BOT_TOKEN")
+	botToken = os.Getenv("BOT_TOKEN")
 	timezone = 3
 
 	if len(botToken) == 0 {
