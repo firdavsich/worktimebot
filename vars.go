@@ -8,14 +8,14 @@ import (
 
 var (
 	botToken    string
-	userID      int64
+	chatID      int64
 	startedWork bool
 	startTime   int
 	endTime     int
-	timezone    int
 	port        string
 	url         string
 	appName     string
+	err         error
 )
 
 func getvars() error {
@@ -31,18 +31,16 @@ func getvars() error {
 	url = fmt.Sprintf("https://" + appName + ".herokuapp.com")
 
 	botToken = os.Getenv("BOT_TOKEN")
-	timezone = 3
 
 	if len(botToken) == 0 {
 		return fmt.Errorf("BOT_TOKEN is missing")
 	}
 
-	userID, err := strconv.ParseInt(os.Getenv("USER_ID"), 10, 64)
+	chatID, err = strconv.ParseInt(os.Getenv("CHAT_ID"), 10, 64)
 
-	if err != nil || userID == 0 {
-		return fmt.Errorf("USER_ID is missing")
+	if err != nil || chatID == 0 {
+		return fmt.Errorf("CHAT_ID is missing")
 	}
-
 	startTime, err = strconv.Atoi(os.Getenv("TIME_START"))
 
 	if err != nil || len(os.Getenv("TIME_START")) == 0 {
