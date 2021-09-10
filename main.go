@@ -16,7 +16,7 @@ func main() {
 	log.Println("Starting bot...")
 
 	// heroku hack
-	go herokuHack(url)
+	go herokuHack()
 
 	bot := telegram.Bot{
 		Token:  botToken,

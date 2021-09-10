@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func herokuHack(url string) {
+func herokuHack() {
 	err = http.ListenAndServe(net.JoinHostPort("", port), nil)
 	if err != nil {
 		log.Fatal(err)
