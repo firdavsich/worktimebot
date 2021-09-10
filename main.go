@@ -2,8 +2,6 @@ package main
 
 import (
 	"log"
-	"net"
-	"net/http"
 	"time"
 
 	"github.com/firdavsich/worktimebot/pkg/telegram"
@@ -15,15 +13,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	log.Println("Starting bot...", chatID)
+	log.Println("Starting bot...")
 
 	// heroku hack
-	go func() {
-		err = http.ListenAndServe(net.JoinHostPort("", port), nil)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}()
+	go herokuHack()
 
 	bot := telegram.Bot{
 		Token:  botToken,
@@ -44,12 +37,6 @@ func main() {
 				log.Println(err)
 			}
 
-		}
-
-		// heroku hack
-		_, err = http.Get(url)
-		if err != nil {
-			log.Fatal(err)
 		}
 
 	}
