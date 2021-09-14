@@ -25,7 +25,7 @@ func main() {
 
 	for range time.Tick(time.Minute) {
 		// if not weekend
-		if time.Now().Weekday() > 1 {
+		if time.Now().Weekday() != time.Saturday && time.Now().Weekday() != time.Sunday {
 			if time.Now().Hour() == startTime && !startedWork {
 				startedWork = true
 				if err := bot.Send(chatID, "Start workday"); err != nil {
