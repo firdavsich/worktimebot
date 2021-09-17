@@ -14,7 +14,6 @@ var (
 	endTime     int
 	port        string
 	url         string
-	appName     string
 	err         error
 )
 
@@ -24,11 +23,10 @@ func getvars() error {
 		return fmt.Errorf("PORT is not set")
 	}
 
-	appName = os.Getenv("HEROKU_APP_NAME")
-	if len(appName) == 0 {
-		return fmt.Errorf("HEROKU_APP_NAME is not set")
+	url = os.Getenv("PING_URL")
+	if len(url) == 0 {
+		return fmt.Errorf("PING_URL is not set")
 	}
-	url = fmt.Sprintf("https://" + appName + ".herokuapp.com")
 
 	botToken = os.Getenv("BOT_TOKEN")
 
