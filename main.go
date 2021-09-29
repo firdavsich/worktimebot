@@ -28,7 +28,7 @@ func main() {
 	for range time.Tick(time.Second * 20) {
 		now = time.Now()
 
-		if time.Minute != 0 {
+		if now.Minute() != 0 {
 			continue
 		}
 		// Skip weekend
@@ -36,19 +36,22 @@ func main() {
 			continue
 		}
 
+		var msg string
+
 		if now.Hour() == startTime {
-			if err := bot.Send(chatID, "Start workday"); err != nil {
-				log.Println(err)
-			}
-			time.Sleep(time.Minute)
+			msg = "Start workday"
 
 		} else if now.Hour() == endTime {
-			if err := bot.Send(chatID, "End workday"); err != nil {
+			msg = "End workday"
+
+		}
+
+		if len(msg) != 0 {
+			if err := bot.Send(chatID, msg); err != nil {
 				log.Println(err)
 			}
 			time.Sleep(time.Minute)
 		}
-
 	}
 
 }
