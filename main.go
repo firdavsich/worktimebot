@@ -25,24 +25,30 @@ func main() {
 		Silent: false,
 	}
 
-	for range time.Tick(time.Minute) {
+	for range time.Tick(time.Second * 20) {
 		now = time.Now()
-		// if not weekend
-		if now.Weekday() != time.Saturday && now.Weekday() != time.Sunday {
-			if now.Hour() == startTime && !startedWork {
-				startedWork = true
-				if err := bot.Send(chatID, "Start workday"); err != nil {
-					log.Println(err)
-				}
 
-			} else if now.Hour() == endTime && startedWork {
-				startedWork = false
-				if err := bot.Send(chatID, "End workday"); err != nil {
-					log.Println(err)
-				}
+		if time.Minute != 0 {
+			continue
+		}
+		// Skip weekend
+		if now.Weekday() == time.Saturday || now.Weekday() == time.Sunday {
+			continue
+		}
 
+		if now.Hour() == startTime {
+			if err := bot.Send(chatID, "Start workday"); err != nil {
+				log.Println(err)
 			}
+			time.Sleep(time.Minute)
+
+		} else if now.Hour() == endTime {
+			if err := bot.Send(chatID, "End workday"); err != nil {
+				log.Println(err)
+			}
+			time.Sleep(time.Minute)
 		}
 
 	}
+
 }

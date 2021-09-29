@@ -7,14 +7,13 @@ import (
 )
 
 var (
-	botToken    string
-	chatID      int64
-	startedWork bool
-	startTime   int
-	endTime     int
-	port        string
-	url         string
-	err         error
+	botToken  string
+	chatID    int64
+	startTime int
+	endTime   int
+	port      string
+	url       string
+	err       error
 )
 
 func getvars() error {
